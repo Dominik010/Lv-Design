@@ -5,8 +5,14 @@ using UnityEngine;
 public class Trigger : MonoBehaviour, Interactive
 {
     public GameObject Door;
+    [SerializeField] float Distance = 5f;
+    bool interacted;
     public void Interact()
     {
-        Door.SetActive(false);
+        if (!interacted)
+        {
+            Door.transform.position += Vector3.up * Distance;
+            interacted = true;
+        }
     }
 }
