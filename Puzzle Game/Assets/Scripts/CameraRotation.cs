@@ -10,12 +10,22 @@ public class CameraRotation : MonoBehaviour
 
     public Transform PlayerMesh;
 
+    [Range (1f, 10f)]
+    [SerializeField] float intDistance = 3f;
+    public LayerMask Interactable;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
+    {
+        CamRot();
+        Interaction();
+    }
+
+    void CamRot()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
@@ -25,5 +35,10 @@ public class CameraRotation : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         PlayerMesh.Rotate(Vector3.up, mouseX);
+    }
+
+    void Interaction()
+    {
+        Physics.Raycast(transform.position, transform.forward, intDistance, Interactable); 
     }
 }
