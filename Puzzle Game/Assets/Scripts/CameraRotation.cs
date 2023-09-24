@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+interface Interactive
+{
+    public void Interact();
+}
 public class CameraRotation : MonoBehaviour
 {
     [Range (0f,10000)]
     [SerializeField] float mouseSensitivity = 100f;
     [SerializeField] float xRotation = 0f;
 
-    public Transform PlayerMesh;
+    public Transform Player;
 
     [Range (1f, 10f)]
-    [SerializeField] float intDistance = 3f;
-    public LayerMask Interactable;
+    [SerializeField] float intDistance = 2f;
 
     private void Start()
     {
@@ -34,11 +37,22 @@ public class CameraRotation : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        PlayerMesh.Rotate(Vector3.up, mouseX);
+        Player.Rotate(Vector3.up, mouseX);
     }
 
     void Interaction()
     {
-        Physics.Raycast(transform.position, transform.forward, intDistance, Interactable); 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Ray interact = new Ray(transform.position, transform.forward);
+
+            if (Physics.Raycast(interact, out RaycastHit hitInfo, intDistance))
+            {
+                if (hitInfo.collider.gameObject.TryGetComponent(out Interactive interactObject))
+                {
+                    interactObject.Interact();
+                }
+            }
+        }
     }
 }

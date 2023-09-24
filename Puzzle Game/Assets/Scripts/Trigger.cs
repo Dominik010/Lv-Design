@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trigger : MonoBehaviour
+public class Trigger : MonoBehaviour, Interactive
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject Door;
+    public void Interact()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Door.SetActive(false);
     }
 }
