@@ -14,5 +14,6 @@ public class Trigger : MonoBehaviour, Interactive
             Door.transform.position += Vector3.up * Distance;
             interacted = true;
         }
+
     }
 }

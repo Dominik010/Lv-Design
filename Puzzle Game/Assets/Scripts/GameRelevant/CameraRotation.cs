@@ -17,6 +17,8 @@ public class CameraRotation : MonoBehaviour
     [Range (1f, 10f)]
     [SerializeField] float intDistance = 2f;
 
+    bool ObjectInHand;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -26,6 +28,14 @@ public class CameraRotation : MonoBehaviour
     {
         CamRot();
         Interaction();
+        if (transform.childCount != 0)
+        {
+            ObjectInHand = true;
+        }
+        else
+        {
+            ObjectInHand= false;
+        }
     }
 
     void CamRot()
@@ -42,7 +52,7 @@ public class CameraRotation : MonoBehaviour
 
     void Interaction()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !ObjectInHand)
         {
             Ray interact = new Ray(transform.position, transform.forward);
 
@@ -54,5 +64,6 @@ public class CameraRotation : MonoBehaviour
                 }
             }
         }
+
     }
 }
