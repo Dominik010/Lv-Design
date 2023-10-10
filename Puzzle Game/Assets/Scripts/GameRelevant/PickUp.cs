@@ -9,57 +9,81 @@ public class PickUp : MonoBehaviour, Interactive
     private new BoxCollider collider;
     private Rigidbody body;
     bool isColliding;
+    Material material;
+    Color baseMaterial;
+    float dropthrowTimer = 0f;
     
     void Start()
     {
         collider = GetComponent<BoxCollider>();
         body = GetComponent<Rigidbody>();
+        material = gameObject.GetComponent<Renderer>().material;
+        baseMaterial = material.color;
     }
 
     void Update()
-    {
-        Drop();
+    {       
+        if (transform.parent != null && dropthrowTimer < 0.5f)
+        {
+            dropthrowTimer += Time.deltaTime;
+        }
+        Opacity();
         Throw();
+        Drop();
     }
 
     void Pickup()
     {
         if (transform.parent == null) 
         {
-            transform.parent = Player.transform;
             collider.enabled = false;
+            transform.parent = Player.transform;
             body.useGravity = false;
             body.isKinematic = true;
             transform.rotation = Player.transform.rotation;
+            transform.position = Player.transform.position + Player.transform.forward;
         }
     }
 
     void Drop()
     {
-        if (transform.parent == Player.transform)
+        if (Input.GetKeyDown(KeyCode.E) && dropthrowTimer >= 0.5f)
         {
-            if (Input.GetKeyDown(KeyCode.E) && !isColliding)
+            if (!isColliding && transform.parent != null)
             {
                 transform.parent = null;
                 collider.enabled = true;
                 body.useGravity = true;
                 body.isKinematic = false;
+                dropthrowTimer = 0f;
             }
         }
     }
 
     void Throw()        
     {
-        if (transform.parent != null && Input.GetMouseButtonDown(0)) 
+        if (transform.parent != null && Input.GetMouseButtonDown(0) && !isColliding && dropthrowTimer >= 0.5f) 
         {
             transform.parent = null;
             collider.enabled = true;
             body.useGravity = true;
             body.isKinematic = false;
             body.AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+            dropthrowTimer = 0f;
         }
     }
 
+    void Opacity() 
+    { 
+        if (transform.parent != null)
+        {
+            material.color = new Color(1f, 1f, 1f, 0f);
+        }
+        else if (transform.parent == null)
+        {
+            material.color = baseMaterial;
+        }
+    }
     public void Interact()
     {
         Pickup();
