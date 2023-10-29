@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector3 JumpHeight = new Vector3(0f, 5f, 0f);
 
     [Range (0.1f,10f)]
-    [SerializeField] float GroundDistance = 1.5f;
+    [SerializeField] float GroundDistance = 1f;
     [SerializeField] Vector3 GroundDirection = new Vector3(0f, -1f, 0f);
+    [SerializeField] Vector3 JumpDetection = new Vector3 (0.5f, 0.2f, 0.5f);
+    [SerializeField] Quaternion BoxCastrot = Quaternion.identity;
     bool CanJump;
     public LayerMask GroundMask;
 
@@ -57,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (Physics.Raycast(transform.position, GroundDirection, GroundDistance, GroundMask))
+        if (Physics.BoxCast(transform.position,JumpDetection, GroundDirection,BoxCastrot,GroundDistance, GroundMask))
         {
             CanJump = true;
         }
