@@ -4,29 +4,32 @@ using UnityEngine;
 
 public class FallingBlock : MonoBehaviour
 {
+    [SerializeField] private AudioSource aud;
     Rigidbody rb;
-    AudioSource aud;
+    Collider col;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        col = rb.GetComponent<Collider>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            StartCoroutine(Fall());
             aud.Play();
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private IEnumerator Fall()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.LogWarning("Colliding");
-            rb.useGravity = true;
-            rb.isKinematic = false;
-        }
+        yield return new WaitForSeconds(2f);
+        rb.useGravity = true;
+        rb.isKinematic = false;
+        col.isTrigger = true;
+        yield return new WaitForSeconds(10f);
+        gameObject.SetActive(false);
     }
 }
