@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Quaternion BoxCastrot = Quaternion.identity;
     bool CanJump;
     public LayerMask GroundMask;
+    public GameObject PlayerCam;
 
     private void Start()
     {
@@ -39,9 +40,16 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         
-        Vector3 move = transform.right * x * moveSpeed / 1.5f + transform.forward * z * moveSpeed;
-
-        rb.velocity = new Vector3(move.x, rb.velocity.y, move.z);
+        if (rb.useGravity) 
+        {
+            Vector3 move = transform.right * x * moveSpeed / 1.5f + transform.forward * z * moveSpeed;
+            rb.velocity = new Vector3(move.x, rb.velocity.y, move.z);
+        }
+        else if (!rb.useGravity)
+        {
+            Vector3 move = PlayerCam.transform.right * x * moveSpeed / 1.5f + PlayerCam.transform.forward * z * moveSpeed;
+            rb.velocity = new Vector3(move.x, move.y, move.z);            
+        }
 
         if (x == 0f && z == 0f && rb.useGravity)
         {
