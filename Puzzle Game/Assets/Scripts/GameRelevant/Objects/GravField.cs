@@ -9,7 +9,16 @@ public class GravField : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
-            rb.useGravity = !rb.useGravity;
+            rb.useGravity = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+            rb.useGravity = true;
         }
     }
 }

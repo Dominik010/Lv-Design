@@ -7,6 +7,7 @@ public class PickUp : MonoBehaviour, Interactive
 {
     [SerializeField] GameObject PlayerCam;
     [SerializeField] GameObject Player;
+    [SerializeField] Transform originParent;
     [SerializeField] float throwStrength = 1000f;
     private new BoxCollider collider;
     private Rigidbody body;
@@ -23,11 +24,12 @@ public class PickUp : MonoBehaviour, Interactive
         body = GetComponent<Rigidbody>();
         material = gameObject.GetComponent<MeshRenderer>().material;
         baseMaterial = material.color;
+        originParent = transform.parent;
     }
 
     void Update()
     {       
-        if (transform.parent != null)
+        if (transform.parent == PlayerCam.transform)
         {
             if (dropthrowTimer < 0.5f)
             {
@@ -44,7 +46,7 @@ public class PickUp : MonoBehaviour, Interactive
 
     void Pickup()
     {
-        if (transform.parent == null) 
+        if (transform.parent != PlayerCam.transform) 
         {
             collider.enabled = false;
             Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: true);
@@ -61,9 +63,9 @@ public class PickUp : MonoBehaviour, Interactive
     {
         if (Input.GetKeyDown(KeyCode.E) && dropthrowTimer >= 0.5f)
         {
-            if (!isColliding && transform.parent != null && !Unavailable)
+            if (!isColliding && transform.parent == PlayerCam.transform && !Unavailable)
             {
-                transform.parent = null;
+                transform.parent = originParent;
                 collider.enabled = true;
                 body.useGravity = true;
                 body.isKinematic = false;
@@ -76,9 +78,9 @@ public class PickUp : MonoBehaviour, Interactive
 
     void Throw()        
     {
-        if (transform.parent != null && Input.GetMouseButtonDown(0) && !isColliding && dropthrowTimer >= 0.5f && !Unavailable) 
+        if (transform.parent == PlayerCam.transform && Input.GetMouseButtonDown(0) && !isColliding && dropthrowTimer >= 0.5f && !Unavailable) 
         {
-            transform.parent = null;
+            transform.parent = originParent;
             collider.enabled = true;
             body.useGravity = true;
             body.isKinematic = false;
@@ -91,11 +93,12 @@ public class PickUp : MonoBehaviour, Interactive
 
     void Opacity() 
     { 
-        if (transform.parent != null)
+        if (transform.parent == PlayerCam.transform)
         {
+            Debug.Log("NewColor");
             material.color = new Color(1f, 1f, 1f, 0f);
         }
-        else if (transform.parent == null)
+        else if (transform.parent != PlayerCam.transform)
         {
             material.color = baseMaterial;
         }
@@ -107,7 +110,7 @@ public class PickUp : MonoBehaviour, Interactive
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Environment") && transform.parent != null)
+        if (other.gameObject.CompareTag("Environment") && transform.parent == PlayerCam.transform)
         {
             Unavailable = true;
         }
@@ -115,7 +118,7 @@ public class PickUp : MonoBehaviour, Interactive
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Environment") && transform.parent != null)
+        if (other.gameObject.CompareTag("Environment") && transform.parent == PlayerCam.transform)
         {
             Unavailable = false;
         }

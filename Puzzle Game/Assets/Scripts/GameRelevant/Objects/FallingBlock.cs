@@ -12,6 +12,7 @@ public class FallingBlock : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         col = rb.GetComponent<Collider>();
+        aud = GetComponent<AudioSource>();
     }
 
     private void OnCollisionEnter(Collision collision)

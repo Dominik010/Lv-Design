@@ -55,6 +55,10 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
         }
+        else if (x == 0f && z == 0f && !rb.useGravity)
+        {
+            rb.velocity = new Vector3(0f, 0f, 0f);
+        }
 
         if (Input.GetKey(KeyCode.LeftShift)) 
         {
