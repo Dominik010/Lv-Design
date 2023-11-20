@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         originalSpeed = moveSpeed;
-        runSpeed = moveSpeed * 1.5f;
+        runSpeed = moveSpeed * 1.3f;
     }
 
     private void Update()
@@ -40,26 +40,31 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         
+        // If the Player is walking, use
         if (rb.useGravity) 
         {
             Vector3 move = transform.right * x * moveSpeed / 1.5f + transform.forward * z * moveSpeed;
             rb.velocity = new Vector3(move.x, rb.velocity.y, move.z);
         }
+        // If the Player is in an anti-gravity area, use
         else if (!rb.useGravity)
         {
             Vector3 move = PlayerCam.transform.right * x * moveSpeed / 1.5f + PlayerCam.transform.forward * z * moveSpeed;
             rb.velocity = new Vector3(move.x, move.y, move.z);            
         }
 
+        // If the Player is falling, use
         if (x == 0f && z == 0f && rb.useGravity)
         {
             rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
         }
+        // To prevent abnormal behaviour on y-axis in anti-gravity area 
         else if (x == 0f && z == 0f && !rb.useGravity)
         {
             rb.velocity = new Vector3(0f, 0f, 0f);
         }
 
+        // increase Movementspeed
         if (Input.GetKey(KeyCode.LeftShift)) 
         {
             moveSpeed = runSpeed;
@@ -72,7 +77,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (Physics.BoxCast(transform.position,JumpDetection, GroundDirection,BoxCastrot,GroundDistance, GroundMask))
+        /* Better than ray since the Player can stay on the edge of an pbject and still
+        be able to jump */
+        if (Physics.BoxCast(transform.position,JumpDetection, GroundDirection
+           ,BoxCastrot,GroundDistance, GroundMask))
         {
             CanJump = true;
         }

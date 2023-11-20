@@ -9,7 +9,9 @@ interface Interactive
 public class CameraRotation : MonoBehaviour
 {
     [Range (0f,10000)]
-    [SerializeField] float mouseSensitivity = 100f;
+    [SerializeField] float mouseSensitivitX = 100f;
+    [Range (0f,10000)]
+    [SerializeField] float mouseSensitivitY = 100f;
     [SerializeField] float xRotation = 0f;
 
     public Transform Player;
@@ -40,8 +42,8 @@ public class CameraRotation : MonoBehaviour
 
     void CamRot()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxisRaw("Mouse X") * mouseSensitivitX * Time.deltaTime;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * mouseSensitivitY * Time.deltaTime;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8186745479174255689}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerCam: {fileID: 0}
   Player: {fileID: 0}
+  originParent: {fileID: 0}
   throwStrength: 1000
   PlayerMask:
     serializedVersion: 2
