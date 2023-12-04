@@ -7,12 +7,29 @@ public class FallingBlock : MonoBehaviour
     [SerializeField] private AudioSource aud;
     Rigidbody rb;
     Collider col;
+    [SerializeField] public Vector3 oriPos;
+    [SerializeField] private GameObject _Trigger;
+    [SerializeField] private Trigger trig;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         col = rb.GetComponent<Collider>();
         aud = GetComponent<AudioSource>();
+        trig = _Trigger.GetComponent<Trigger>();
+    }
+
+    private void Start()
+    {
+        rb.useGravity = false;
+        rb.isKinematic = true;
+        col.isTrigger = false;
+        oriPos = transform.localPosition;
+    }
+
+    private void Update()
+    {
+        ReturnToOrigin();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -26,11 +43,23 @@ public class FallingBlock : MonoBehaviour
 
     private IEnumerator Fall()
     {
-        yield return new WaitForSeconds(2f);
-        rb.useGravity = true;
-        rb.isKinematic = false;
-        col.isTrigger = true;
-        yield return new WaitForSeconds(10f);
-        gameObject.SetActive(false);
+        if (trig.Return == false)
+        {
+            yield return new WaitForSeconds(2f);
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            col.isTrigger = true;
+        }
+    }
+
+    private void ReturnToOrigin()
+    {
+        if (trig.Return == true)
+        {
+            rb.useGravity = false;
+            rb.isKinematic = true;
+            col.isTrigger = false;
+            transform.localPosition = oriPos;
+        }
     }
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8586993270586597146}
   - component: {fileID: 6802464502229397725}
   - component: {fileID: 5914461737443423690}
-  - component: {fileID: 6223951378813839427}
   - component: {fileID: 7564350163870915221}
   m_Layer: 0
   m_Name: GravChanger
@@ -85,18 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6223951378813839427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3290384048043367904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 393313a6651f24c45bb9ad824b71935b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &7564350163870915221
 BoxCollider:
   m_ObjectHideFlags: 0

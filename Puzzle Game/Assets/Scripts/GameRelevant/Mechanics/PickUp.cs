@@ -35,6 +35,7 @@ public class PickUp : MonoBehaviour, Interactive
             {
                 dropthrowTimer += Time.deltaTime;
             }
+            Opacity();
         }
         else
         {
@@ -93,12 +94,16 @@ public class PickUp : MonoBehaviour, Interactive
 
     void Opacity() 
     { 
-        if (transform.parent == PlayerCam.transform)
+        if (transform.parent == PlayerCam.transform && !Unavailable)
         {
-            Debug.Log("NewColor");
             material.color = new Color(1f, 1f, 1f, 0f);
         }
-        else if (transform.parent != PlayerCam.transform)
+        else if (Unavailable)
+        {
+            material.color = new Color(1f, 0f, 0f, 0.3f);
+        }
+
+        if (transform.parent != PlayerCam.transform)
         {
             material.color = baseMaterial;
         }
