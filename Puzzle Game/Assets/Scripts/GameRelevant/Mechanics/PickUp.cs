@@ -9,7 +9,7 @@ public class PickUp : MonoBehaviour, Interactive
     [SerializeField] GameObject Player;
     [SerializeField] Transform originParent;
     [SerializeField] float throwStrength = 1000f;
-    private new BoxCollider collider;
+    private new Collider collider;
     private Rigidbody body;
     public LayerMask PlayerMask;
     bool isColliding;
@@ -20,7 +20,7 @@ public class PickUp : MonoBehaviour, Interactive
     
     void Start()
     {
-        collider = GetComponent<BoxCollider>();
+        collider = GetComponent<Collider>();
         body = GetComponent<Rigidbody>();
         material = gameObject.GetComponent<MeshRenderer>().material;
         baseMaterial = material.color;
@@ -49,13 +49,12 @@ public class PickUp : MonoBehaviour, Interactive
     {
         if (transform.parent != PlayerCam.transform) 
         {
-            collider.enabled = false;
+            MoreActive(true);
             Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: true);
             transform.parent = PlayerCam.transform;
-            body.useGravity = false;
-            body.isKinematic = true;
-            transform.rotation = PlayerCam.transform.rotation;
-            transform.position = PlayerCam.transform.position + PlayerCam.transform.forward;
+            gameObject.layer = LayerMask.NameToLayer("Interaction");
+            transform.SetPositionAndRotation(PlayerCam.transform.position + PlayerCam.transform.forward,
+            PlayerCam.transform.rotation);
             Opacity();
         }
     }
@@ -67,10 +66,9 @@ public class PickUp : MonoBehaviour, Interactive
             if (!isColliding && transform.parent == PlayerCam.transform && !Unavailable)
             {
                 transform.parent = originParent;
-                collider.enabled = true;
-                body.useGravity = true;
-                body.isKinematic = false;
+                MoreActive(false);
                 dropthrowTimer = 0f;
+                gameObject.layer = LayerMask.NameToLayer("Default");
                 Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: false);
                 Opacity();
             }
@@ -79,14 +77,14 @@ public class PickUp : MonoBehaviour, Interactive
 
     void Throw()        
     {
-        if (transform.parent == PlayerCam.transform && Input.GetMouseButtonDown(0) && !isColliding && dropthrowTimer >= 0.5f && !Unavailable) 
+        if (transform.parent == PlayerCam.transform && Input.GetMouseButtonDown(0) 
+            && !isColliding && dropthrowTimer >= 0.5f && !Unavailable) 
         {
             transform.parent = originParent;
-            collider.enabled = true;
-            body.useGravity = true;
-            body.isKinematic = false;
+            MoreActive(false);
             body.AddForce(transform.forward * throwStrength, ForceMode.Impulse);
             dropthrowTimer = 0f;
+            gameObject.layer = LayerMask.NameToLayer("Default");
             Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: false);
             Opacity();
         }
@@ -111,6 +109,13 @@ public class PickUp : MonoBehaviour, Interactive
     public void Interact()
     {
         Pickup();
+    }
+
+    private void MoreActive(bool enabled)
+    {
+        collider.enabled = !enabled;
+        body.useGravity = !enabled;
+        body.isKinematic = enabled;
     }
 
     private void OnTriggerStay(Collider other)

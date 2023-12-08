@@ -21,10 +21,15 @@ public class FallingBlock : MonoBehaviour
 
     private void Start()
     {
-        rb.useGravity = false;
-        rb.isKinematic = true;
-        col.isTrigger = false;
+        SetPhysics(false);
         oriPos = transform.localPosition;
+    }
+
+    private void SetPhysics(bool enabled)
+    {
+        rb.useGravity = enabled;
+        rb.isKinematic = !enabled;
+        col.isTrigger = enabled;      
     }
 
     private void Update()
@@ -46,9 +51,7 @@ public class FallingBlock : MonoBehaviour
         if (trig.Return == false)
         {
             yield return new WaitForSeconds(2f);
-            rb.useGravity = true;
-            rb.isKinematic = false;
-            col.isTrigger = true;
+            SetPhysics(true);
         }
     }
 
@@ -56,9 +59,7 @@ public class FallingBlock : MonoBehaviour
     {
         if (trig.Return == true)
         {
-            rb.useGravity = false;
-            rb.isKinematic = true;
-            col.isTrigger = false;
+            SetPhysics(false);
             transform.localPosition = oriPos;
         }
     }
