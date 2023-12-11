@@ -7,9 +7,12 @@ public class FallingBlock : MonoBehaviour
     [SerializeField] private AudioSource aud;
     Rigidbody rb;
     Collider col;
+    [SerializeField] private bool Platform;
+    [SerializeField] private bool ThisIsAnObject;
     [SerializeField] public Vector3 oriPos;
     [SerializeField] private GameObject _Trigger;
     [SerializeField] private Trigger trig;
+    [SerializeField] private float TimeToFall = 2f;
 
     private void Awake()
     {
@@ -27,9 +30,17 @@ public class FallingBlock : MonoBehaviour
 
     private void SetPhysics(bool enabled)
     {
-        rb.useGravity = enabled;
-        rb.isKinematic = !enabled;
-        col.isTrigger = enabled;      
+        if (Platform)
+        {
+            rb.useGravity = enabled;
+            rb.isKinematic = !enabled;
+            col.isTrigger = enabled;
+        }
+        else if (ThisIsAnObject)
+        {
+            rb.useGravity = enabled;
+            rb.isKinematic = !enabled;
+        }
     }
 
     private void Update()
@@ -39,10 +50,20 @@ public class FallingBlock : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (Platform)
         {
-            StartCoroutine(Fall());
-            aud.Play();
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                StartCoroutine(Fall());
+                aud.Play();
+            }
+        }
+        else if (ThisIsAnObject)
+        {
+            if (collision.gameObject.CompareTag("Throwable"))
+            {
+                SetPhysics(true);
+            }
         }
     }
 
@@ -50,7 +71,7 @@ public class FallingBlock : MonoBehaviour
     {
         if (trig.Return == false)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(TimeToFall);
             SetPhysics(true);
         }
     }

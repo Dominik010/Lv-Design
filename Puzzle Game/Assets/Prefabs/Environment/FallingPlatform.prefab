@@ -148,6 +148,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aud: {fileID: 3972930886017803060}
+  Platform: 1
+  ThisIsAnObject: 0
+  oriPos: {x: 0, y: 0, z: 0}
+  _Trigger: {fileID: 0}
+  trig: {fileID: 0}
+  TimeToFall: 2
 --- !u!82 &3972930886017803060
 AudioSource:
   m_ObjectHideFlags: 0

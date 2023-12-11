@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        /* Better than ray since the Player can stay on the edge of an pbject and still
+        /* Better than ray since the Player can stay on the edge of an object and still
         be able to jump */
         if (Physics.BoxCast(transform.position,JumpDetection, GroundDirection
            ,BoxCastrot,GroundDistance, GroundMask))

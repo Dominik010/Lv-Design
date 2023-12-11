@@ -8,7 +8,7 @@ public class PickUp : MonoBehaviour, Interactive
     [SerializeField] GameObject PlayerCam;
     [SerializeField] GameObject Player;
     [SerializeField] Transform originParent;
-    [SerializeField] float throwStrength = 1000f;
+    [SerializeField] float throwStrength = 10f;
     private new Collider collider;
     private Rigidbody body;
     public LayerMask PlayerMask;
@@ -82,7 +82,7 @@ public class PickUp : MonoBehaviour, Interactive
         {
             transform.parent = originParent;
             MoreActive(false);
-            body.AddForce(transform.forward * throwStrength, ForceMode.Impulse);
+            body.AddForce(transform.forward * body.mass * throwStrength, ForceMode.Impulse);
             dropthrowTimer = 0f;
             gameObject.layer = LayerMask.NameToLayer("Default");
             Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: false);
