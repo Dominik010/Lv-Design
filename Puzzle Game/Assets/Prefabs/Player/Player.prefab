@@ -111,9 +111,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &6032098319108361047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c0be4770ac5f8849999f472e6103213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 300
+  mouseSensitivitX: 100
+  mouseSensitivitY: 100
   xRotation: 0
   Player: {fileID: 2822586618218805316}
   intDistance: 2
