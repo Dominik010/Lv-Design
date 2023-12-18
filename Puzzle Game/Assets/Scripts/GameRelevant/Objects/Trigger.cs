@@ -23,6 +23,7 @@ public class Trigger : MonoBehaviour, Interactive
     [SerializeField] private bool Rotater = false;
 
     [SerializeField] private AudioSource click;
+    [SerializeField] public GameObject Light;
 
     private void Start()
     {
@@ -70,6 +71,7 @@ public class Trigger : MonoBehaviour, Interactive
         if (!interacted)
         {
             click.Play();
+            Light.SetActive(true);
             Door.transform.position += Vector3.up * Distance;
             if (turnOff)
             {

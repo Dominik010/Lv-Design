@@ -60,10 +60,7 @@ public class FallingBlock : MonoBehaviour
         }
         else if (ThisIsAnObject)
         {
-            if (collision.gameObject.CompareTag("Throwable"))
-            {
-                SetPhysics(true);
-            }
+                SetPhysics(true);           
         }
     }
 

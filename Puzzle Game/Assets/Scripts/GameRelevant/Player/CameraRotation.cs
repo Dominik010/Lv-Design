@@ -29,7 +29,10 @@ public class CameraRotation : MonoBehaviour
     private void Update()
     {
         CamRot();
-        Interaction();
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Interaction();
+        }
         if (transform.childCount != 0)
         {
             ObjectInHand = true;
@@ -54,7 +57,7 @@ public class CameraRotation : MonoBehaviour
 
     void Interaction()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !ObjectInHand)
+        if (!ObjectInHand)
         {
             Ray interact = new Ray(transform.position, transform.forward);
 
@@ -65,6 +68,11 @@ public class CameraRotation : MonoBehaviour
                     interactObject.Interact();
                 }
             }
+        }
+
+        else if (ObjectInHand && transform.GetChild(0).gameObject.activeSelf == false)
+        {
+           transform.DetachChildren();
         }
     }
 }
