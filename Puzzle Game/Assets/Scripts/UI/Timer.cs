@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
     public float Timering = 0;
     void Update()
     {
-        Timering += Time.deltaTime;
-        Timinger.text = Timinger.text + Timering;
+        Timering = Time.deltaTime;
+        Timinger.text = new string (Timinger.text + Timering);
     }
 }

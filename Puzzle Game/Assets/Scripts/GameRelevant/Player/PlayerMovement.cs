@@ -8,9 +8,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
 
     [Range(1f, 100f)]
-    [SerializeField] float moveSpeed = 7f;
-    float originalSpeed;
-    float runSpeed;
+    [SerializeField] float moveSpeed = 5f;
     [SerializeField] Vector3 JumpHeight = new Vector3(0f, 5f, 0f);
 
     [Range (0.1f,10f)]
@@ -25,14 +23,16 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        originalSpeed = moveSpeed;
-        runSpeed = moveSpeed * 1.3f;
     }
 
     private void Update()
     {
-        Move();
         Jump();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     void Move()
@@ -62,16 +62,6 @@ public class PlayerMovement : MonoBehaviour
         else if (x == 0f && z == 0f && !rb.useGravity)
         {
             rb.velocity = new Vector3(0f, 0f, 0f);
-        }
-
-        // increase Movementspeed
-        if (Input.GetKey(KeyCode.LeftShift)) 
-        {
-            moveSpeed = runSpeed;
-        }
-        else
-        {
-            moveSpeed = originalSpeed;
         }
     }
 

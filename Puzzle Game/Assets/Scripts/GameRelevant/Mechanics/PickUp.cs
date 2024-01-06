@@ -31,18 +31,18 @@ public class PickUp : MonoBehaviour, Interactive
     {       
         if (transform.parent == PlayerCam.transform)
         {
+            transform.SetPositionAndRotation(Vector3.Lerp(transform.position,
+            PlayerCam.transform.position + PlayerCam.transform.forward * 1.5f, 0.05f)
+            , Quaternion.Lerp(transform.rotation, PlayerCam.transform.rotation, 0.05f));
+
             if (dropthrowTimer < 0.5f)
             {
                 dropthrowTimer += Time.deltaTime;
             }
             Opacity();
+            Drop();
+            Throw();
         }
-        else
-        {
-            return;
-        }
-        Throw();
-        Drop();
     }
 
     void Pickup()
@@ -53,8 +53,6 @@ public class PickUp : MonoBehaviour, Interactive
             Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: true);
             transform.parent = PlayerCam.transform;
             gameObject.layer = LayerMask.NameToLayer("Interaction");
-            transform.SetPositionAndRotation(PlayerCam.transform.position + PlayerCam.transform.forward,
-            PlayerCam.transform.rotation);
             Opacity();
         }
     }

@@ -8,7 +8,7 @@ public class Rotator : MonoBehaviour
     [SerializeField] public Vector3 rotDirection = new Vector3(0f, 1f, 0f);
     public bool isRotating = true;
 
-    void Update()
+    void FixedUpdate()
     {
         if (isRotating)
         {
@@ -19,5 +19,23 @@ public class Rotator : MonoBehaviour
     private void Rotationing()
     {
         transform.Rotate(rotDirection * rotSpeed * Time.deltaTime);       
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") ||
+            collision.gameObject.CompareTag("Throwable"))
+        {
+            collision.transform.parent = transform;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") ||
+            collision.gameObject.CompareTag("Throwable")) 
+        { 
+            collision.transform.parent = null; 
+        }
     }
 }

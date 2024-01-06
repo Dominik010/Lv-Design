@@ -28,7 +28,6 @@ public class CameraRotation : MonoBehaviour
 
     private void Update()
     {
-        CamRot();
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interaction();
@@ -39,8 +38,13 @@ public class CameraRotation : MonoBehaviour
         }
         else
         {
-            ObjectInHand= false;
+            ObjectInHand = false;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        CamRot();
     }
 
     void CamRot()
