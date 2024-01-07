@@ -21,9 +21,12 @@ public class CameraRotation : MonoBehaviour
 
     bool ObjectInHand;
 
+    private Light cLight;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        cLight = GetComponent<Light>();
     }
 
     private void Update()
@@ -31,6 +34,10 @@ public class CameraRotation : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interaction();
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            LightSwitch();
         }
         if (transform.childCount != 0)
         {
@@ -78,5 +85,10 @@ public class CameraRotation : MonoBehaviour
         {
            transform.DetachChildren();
         }
+    }
+
+    private void LightSwitch()
+    {
+        cLight.enabled = !cLight.enabled;
     }
 }
