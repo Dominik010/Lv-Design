@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PickUp : MonoBehaviour, Interactive
 {
@@ -17,7 +18,10 @@ public class PickUp : MonoBehaviour, Interactive
     Material material;
     Color baseMaterial;
     float dropthrowTimer = 0f;
-    
+
+    [SerializeField] private string itemName;
+    public string ItemName => itemName;
+
     void Start()
     {
         collider = GetComponent<Collider>();
@@ -66,7 +70,7 @@ public class PickUp : MonoBehaviour, Interactive
                 transform.parent = originParent;
                 MoreActive(false);
                 dropthrowTimer = 0f;
-                gameObject.layer = LayerMask.NameToLayer("Default");
+                gameObject.layer = LayerMask.NameToLayer("CanInteract");
                 Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: false);
                 Opacity();
             }
@@ -75,14 +79,14 @@ public class PickUp : MonoBehaviour, Interactive
 
     void Throw()        
     {
-        if (transform.parent == PlayerCam.transform && Input.GetMouseButtonDown(0) 
-            && !isColliding && dropthrowTimer >= 0.5f && !Unavailable) 
+        if (transform.parent == PlayerCam.transform && Input.GetMouseButtonDown(0)
+            && !isColliding && dropthrowTimer >= 0.5f && !Unavailable && gameObject.tag == "Throwable")
         {
             transform.parent = originParent;
             MoreActive(false);
             body.AddForce(transform.forward * body.mass * throwStrength, ForceMode.Impulse);
             dropthrowTimer = 0f;
-            gameObject.layer = LayerMask.NameToLayer("Default");
+            gameObject.layer = LayerMask.NameToLayer("CanInteract");
             Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: false);
             Opacity();
         }
@@ -118,7 +122,7 @@ public class PickUp : MonoBehaviour, Interactive
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Environment") && transform.parent == PlayerCam.transform)
+        if (other.gameObject && transform.parent == PlayerCam.transform)
         {
             Unavailable = true;
         }
@@ -126,7 +130,7 @@ public class PickUp : MonoBehaviour, Interactive
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Environment") && transform.parent == PlayerCam.transform)
+        if (other.gameObject && transform.parent == PlayerCam.transform)
         {
             Unavailable = false;
         }

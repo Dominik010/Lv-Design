@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +13,15 @@ public class FadeBlack : MonoBehaviour, Interactive
     public bool gotKey;
     private bool portPlayer;
     private PlayerMovement pM;
+    private Rigidbody Prb;
+
+    [SerializeField] private string itemName;
+    public string ItemName => itemName;
 
     void Start () 
     {
         pM = Player.GetComponent<PlayerMovement>();
+        Prb = Player.GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -23,19 +29,27 @@ public class FadeBlack : MonoBehaviour, Interactive
         if (portPlayer)
         {
             pM.enabled = false;
+            Prb.isKinematic = true;
         }
         else if (!portPlayer)
         {
             pM.enabled = true;
+            Prb.isKinematic = false;
         }
     }
     public void Interact()
     {
         if (gotKey) 
         {
-            Debug.Log("Fading");
             portPlayer = true;
-            StartCoroutine(Fading());
+            // StartCoroutine(Fading());
+            _Animator.SetTrigger(fadeOut);
+            StartCoroutine(WaitForAnimation("Fade_Out", 0, () =>
+            {
+                Player.transform.position = newTransform.position;
+                Debug.Log("Teleport");
+                portPlayer = false;
+            }));
         }
     }
 
@@ -46,9 +60,14 @@ public class FadeBlack : MonoBehaviour, Interactive
         yield return new WaitForSeconds(1f);
         Player.transform.position = newTransform.position;
         yield return new WaitForSeconds(1f);
-        Debug.Log("Unfading");
-        _Animator.SetFloat(runTime, -1f);
-        _Animator.SetTrigger(fadeOut);
         portPlayer = false;
+    }
+
+    IEnumerator WaitForAnimation(string animationNameInAnimator, int animationlayerIndex, Action callback)
+    {
+        yield return new WaitUntil(() => _Animator.GetCurrentAnimatorStateInfo(animationlayerIndex).IsName(animationNameInAnimator));
+        yield return new WaitUntil(() => _Animator.GetCurrentAnimatorStateInfo(animationlayerIndex).normalizedTime > 0.95f 
+        && _Animator.GetCurrentAnimatorStateInfo(animationlayerIndex).IsName(animationNameInAnimator));
+        callback?.Invoke();
     }
 }

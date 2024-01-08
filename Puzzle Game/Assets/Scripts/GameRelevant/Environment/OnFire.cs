@@ -8,16 +8,19 @@ public class OnFire : MonoBehaviour, Interactive
     private Light myLight;
     private ParticleSystem myParticleSystem;
     public bool Off;
+
+    [SerializeField] private string itemName;
+    public string ItemName => itemName;
     void Start()
     {
+        myLight = GetComponentInChildren<Light>(includeInactive: true);
+        myParticleSystem = GetComponentInChildren<ParticleSystem>(includeInactive: true);
         if (Off)
         {
             myParticleSystem.Stop();
             myParticleSystem.Clear();
             myLight.enabled = false;
         }
-        myLight = GetComponentInChildren<Light>(includeInactive: true);
-        myParticleSystem = GetComponentInChildren<ParticleSystem>(includeInactive: true);
     }
 
     public void Interact()

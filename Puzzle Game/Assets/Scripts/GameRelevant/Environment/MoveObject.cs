@@ -11,6 +11,9 @@ public class MoveObject : MonoBehaviour, Interactive
     bool move;
     bool interacted;
 
+    [SerializeField] private string itemName;
+    public string ItemName => itemName;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();

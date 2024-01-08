@@ -25,6 +25,8 @@ public class Trigger : MonoBehaviour, Interactive
     [SerializeField] private AudioSource click;
     [SerializeField] public GameObject Light;
 
+    [SerializeField] private string itemName;
+    public string ItemName => itemName;
     private void Start()
     {
         click = GetComponent<AudioSource>();

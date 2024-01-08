@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface Interactive
+public interface Interactive
 {
     public void Interact();
+    public string ItemName {get;}
 }
 public class CameraRotation : MonoBehaviour
 {

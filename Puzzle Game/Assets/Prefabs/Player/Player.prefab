@@ -134,7 +134,7 @@ MonoBehaviour:
   BoxCastrot: {x: 0, y: 0, z: 0, w: 1}
   GroundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 769
   PlayerCam: {fileID: 747126321324840065}
 --- !u!65 &5065755357234758297
 BoxCollider:
@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 3877045399497761280}
   - component: {fileID: 2507966488061351971}
   - component: {fileID: 4124245054936682016}
+  - component: {fileID: 8912354291629203846}
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -275,7 +276,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747126321324840065}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
@@ -330,3 +331,21 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &8912354291629203846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747126321324840065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1388fd2126e8ec4087f9240d1716032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayedText: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  iDistance: 2
+  timeCheck: 0.2

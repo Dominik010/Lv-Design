@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Environment
+  - Throwable
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
@@ -13,8 +16,8 @@ TagManager:
   - UI
   - Player
   - Interaction
-  - 
-  - 
+  - Environment
+  - CanInteract
   - 
   - 
   - 
@@ -38,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: UI
+    uniqueID: 797880871
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
