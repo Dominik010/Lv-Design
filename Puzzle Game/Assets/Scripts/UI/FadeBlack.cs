@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FadeBlack : MonoBehaviour, Interactive
@@ -14,6 +15,8 @@ public class FadeBlack : MonoBehaviour, Interactive
     private bool portPlayer;
     private PlayerMovement pM;
     private Rigidbody Prb;
+    public AudioSource locked;
+    [SerializeField] private TextMeshProUGUI lText;
 
     [SerializeField] private string itemName;
     public string ItemName => itemName;
@@ -22,6 +25,7 @@ public class FadeBlack : MonoBehaviour, Interactive
     {
         pM = Player.GetComponent<PlayerMovement>();
         Prb = Player.GetComponent<Rigidbody>();
+        locked = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -50,6 +54,12 @@ public class FadeBlack : MonoBehaviour, Interactive
                 Debug.Log("Teleport");
                 portPlayer = false;
             }));
+        }
+        else if (!gotKey)
+        {
+            locked.Play();
+            /*lText.text = "Locked";
+            lText.gameObject.SetActive(true);*/
         }
     }
 

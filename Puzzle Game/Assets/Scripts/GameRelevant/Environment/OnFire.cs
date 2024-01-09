@@ -8,6 +8,7 @@ public class OnFire : MonoBehaviour, Interactive
     private Light myLight;
     private ParticleSystem myParticleSystem;
     public bool Off;
+    public AudioSource _switch;
 
     [SerializeField] private string itemName;
     public string ItemName => itemName;
@@ -20,7 +21,7 @@ public class OnFire : MonoBehaviour, Interactive
             myParticleSystem.Stop();
             myParticleSystem.Clear();
             myLight.enabled = false;
-        }
+        }   _switch = GetComponent<AudioSource>();
     }
 
     public void Interact()
@@ -35,6 +36,7 @@ public class OnFire : MonoBehaviour, Interactive
         {
             myParticleSystem.Play();
             myLight.enabled = true;
+            _switch.Play();
         }
     }
 }

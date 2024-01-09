@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Range(1f, 100f)]
     [SerializeField] float moveSpeed = 3f;
-    [SerializeField] Vector3 JumpHeight = new Vector3(0f, 5f, 0f);
+    [SerializeField] Vector3 JumpHeight = new Vector3(0f, 4f, 0f);
 
     [Range (0.1f,10f)]
     [SerializeField] float GroundDistance = 1f;
@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     bool CanJump;
     public LayerMask GroundMask;
     public GameObject PlayerCam;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();

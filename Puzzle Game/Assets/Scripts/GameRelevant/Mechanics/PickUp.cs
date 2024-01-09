@@ -10,6 +10,10 @@ public class PickUp : MonoBehaviour, Interactive
     [SerializeField] GameObject Player;
     [SerializeField] Transform originParent;
     [SerializeField] float throwStrength = 10f;
+    [SerializeField] private AudioSource boxAud;
+    [SerializeField] private AudioClip _pickUp;
+    [SerializeField] private AudioClip _drop;
+    [SerializeField] private AudioClip _throw;
     private new Collider collider;
     private Rigidbody body;
     public LayerMask PlayerMask;
@@ -18,6 +22,7 @@ public class PickUp : MonoBehaviour, Interactive
     Material material;
     Color baseMaterial;
     float dropthrowTimer = 0f;
+    float timer = 0f;
 
     [SerializeField] private string itemName;
     public string ItemName => itemName;
@@ -29,6 +34,7 @@ public class PickUp : MonoBehaviour, Interactive
         material = gameObject.GetComponent<MeshRenderer>().material;
         baseMaterial = material.color;
         originParent = transform.parent;
+        boxAud = gameObject.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -47,6 +53,11 @@ public class PickUp : MonoBehaviour, Interactive
             Drop();
             Throw();
         }
+
+        if (timer <= 1f)
+        {
+            timer += Time.deltaTime;
+        }
     }
 
     void Pickup()
@@ -58,6 +69,8 @@ public class PickUp : MonoBehaviour, Interactive
             transform.parent = PlayerCam.transform;
             gameObject.layer = LayerMask.NameToLayer("Interaction");
             Opacity();
+            boxAud.clip = _pickUp;
+            boxAud.Play();
         }
     }
 
@@ -89,6 +102,8 @@ public class PickUp : MonoBehaviour, Interactive
             gameObject.layer = LayerMask.NameToLayer("CanInteract");
             Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: false);
             Opacity();
+            boxAud.clip = _throw;
+            boxAud.Play();
         }
     }
 
@@ -133,6 +148,16 @@ public class PickUp : MonoBehaviour, Interactive
         if (other.gameObject && transform.parent == PlayerCam.transform)
         {
             Unavailable = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (timer >= 1f)
+        {
+            boxAud.clip = _drop;
+            boxAud.Play();
+            timer = 0f;
         }
     }
 }
