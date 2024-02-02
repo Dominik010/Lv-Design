@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [Range (0.1f,10f)]
     [SerializeField] float GroundDistance = 1f;
     [SerializeField] Vector3 GroundDirection = new Vector3(0f, -1f, 0f);
-    [SerializeField] Vector3 JumpDetection = new Vector3 (0.5f, 0.2f, 0.5f);
+    [SerializeField] Vector3 JumpDetection = new Vector3 (0.3f, 0.2f, 0.3f);
     [SerializeField] Quaternion BoxCastrot = Quaternion.identity;
     bool CanJump;
     public LayerMask GroundMask;
@@ -42,6 +42,14 @@ public class PlayerMovement : MonoBehaviour
         // If the Player is walking, use
         if (rb.useGravity) 
         {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                moveSpeed = 4.5f;
+            }
+            else
+            {
+                moveSpeed = 3f;
+            }
             Vector3 move = transform.right * x * moveSpeed / 1.5f + transform.forward * z * moveSpeed;
             rb.velocity = new Vector3(move.x, rb.velocity.y, move.z);
         }

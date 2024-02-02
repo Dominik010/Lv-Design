@@ -13,9 +13,15 @@ public class ButtonPlay : MonoBehaviour
     {
         SceneManager.LoadScene(LevelScene.SceneName);
     }
+
+    private IEnumerator GameStart()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(SettingScene.SceneName);
+    }
     public void AufKlick()
     {
-        SceneManager.LoadScene(SettingScene.SceneName);
+        StartCoroutine(GameStart());
     }
     public void ReturnToTitle()
     {

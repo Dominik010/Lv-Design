@@ -41,7 +41,7 @@ public class TextRay : MonoBehaviour
 
     private void ShowText(string name)
     {
-        displayedText.text = "interact with " + name;
+        displayedText.text = "[E] interact with " + name;
         displayedText.gameObject.SetActive(true);
     }
 

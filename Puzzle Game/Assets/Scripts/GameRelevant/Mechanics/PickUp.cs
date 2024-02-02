@@ -9,7 +9,7 @@ public class PickUp : MonoBehaviour, Interactive
     [SerializeField] GameObject PlayerCam;
     [SerializeField] GameObject Player;
     [SerializeField] Transform originParent;
-    [SerializeField] float throwStrength = 10f;
+    [SerializeField] float throwStrength = 5f;
     [SerializeField] private AudioSource boxAud;
     [SerializeField] private AudioClip _pickUp;
     [SerializeField] private AudioClip _drop;
@@ -42,7 +42,7 @@ public class PickUp : MonoBehaviour, Interactive
         if (transform.parent == PlayerCam.transform)
         {
             transform.SetPositionAndRotation(Vector3.Lerp(transform.position,
-            PlayerCam.transform.position + PlayerCam.transform.forward * 1.5f, 0.05f)
+            PlayerCam.transform.position + PlayerCam.transform.forward * 1.25f, 0.05f)
             , Quaternion.Lerp(transform.rotation, PlayerCam.transform.rotation, 0.05f));
 
             if (dropthrowTimer < 0.5f)
@@ -97,7 +97,7 @@ public class PickUp : MonoBehaviour, Interactive
         {
             transform.parent = originParent;
             MoreActive(false);
-            body.AddForce(transform.forward * body.mass * throwStrength, ForceMode.Impulse);
+            body.AddForce(transform.forward * body.mass / 1.5f * throwStrength, ForceMode.Impulse);
             dropthrowTimer = 0f;
             gameObject.layer = LayerMask.NameToLayer("CanInteract");
             Physics.IgnoreCollision(collider, Player.GetComponent<Collider>(), ignore: false);
