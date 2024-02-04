@@ -10,6 +10,12 @@ public class TextRay : MonoBehaviour
     public float iDistance = 2;
     public float timeCheck = 0.2f;
     private float Timer;
+    [SerializeField] private CameraRotation cRotation;
+
+    private void Awake()
+    {
+        cRotation = GetComponent<CameraRotation>();
+    }
 
     private void Update()
     {
@@ -28,7 +34,7 @@ public class TextRay : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, iDistance, layerMask))
         {
-            if (hit.collider.gameObject.TryGetComponent(out Interactive interactive))
+            if (hit.collider.gameObject.TryGetComponent(out Interactive interactive) && !cRotation.ObjectInHand)
             {
                 ShowText(hit.collider.gameObject.name);
             }              

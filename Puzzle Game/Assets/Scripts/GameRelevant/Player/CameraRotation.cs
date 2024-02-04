@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public interface Interactive
@@ -16,11 +17,13 @@ public class CameraRotation : MonoBehaviour
     [SerializeField] float xRotation = 0f;
 
     public Transform Player;
+    [SerializeField] private GameObject Crosshair;
+    [SerializeField] private GameObject Control;
 
     [Range (1f, 10f)]
     [SerializeField] float intDistance = 2f;
 
-    bool ObjectInHand;
+    public bool ObjectInHand;
 
     private Light cLight;
 
@@ -54,6 +57,17 @@ public class CameraRotation : MonoBehaviour
     private void FixedUpdate()
     {
         CamRot();
+
+        if (ObjectInHand)
+        {
+            Crosshair.SetActive(false);
+            Control.SetActive(true);
+        }
+        else if (!ObjectInHand)
+        {
+            Crosshair.SetActive(true);
+            Control.SetActive(false);
+        }
     }
 
     void CamRot()

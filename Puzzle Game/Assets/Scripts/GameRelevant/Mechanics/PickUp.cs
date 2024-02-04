@@ -14,6 +14,7 @@ public class PickUp : MonoBehaviour, Interactive
     [SerializeField] private AudioClip _pickUp;
     [SerializeField] private AudioClip _drop;
     [SerializeField] private AudioClip _throw;
+    [SerializeField] private LayerMask oMask;
     private new Collider collider;
     private Rigidbody body;
     public LayerMask PlayerMask;
@@ -23,6 +24,7 @@ public class PickUp : MonoBehaviour, Interactive
     Color baseMaterial;
     float dropthrowTimer = 0f;
     float timer = 0f;
+    private bool Check;
 
     [SerializeField] private string itemName;
     public string ItemName => itemName;
@@ -44,6 +46,16 @@ public class PickUp : MonoBehaviour, Interactive
             transform.SetPositionAndRotation(Vector3.Lerp(transform.position,
             PlayerCam.transform.position + PlayerCam.transform.forward * 1.25f, 0.05f)
             , Quaternion.Lerp(transform.rotation, PlayerCam.transform.rotation, 0.05f));
+          
+            if (Physics.Raycast(PlayerCam.transform.position, PlayerCam.transform.forward, out RaycastHit hit, 1.25f, oMask)
+                && hit.transform.gameObject.name != gameObject.name)
+            {
+                Unavailable = true;
+            }
+            else if (Check)
+            {
+                Unavailable = false;
+            }
 
             if (dropthrowTimer < 0.5f)
             {
@@ -93,10 +105,10 @@ public class PickUp : MonoBehaviour, Interactive
     void Throw()        
     {
         if (transform.parent == PlayerCam.transform && Input.GetMouseButtonDown(0)
-            && !isColliding && dropthrowTimer >= 0.5f && !Unavailable && gameObject.tag == "Throwable")
+            && !isColliding && dropthrowTimer >= 0.5f && !Unavailable && gameObject.tag == "Throwable" | gameObject.tag == "Stone")
         {
-            transform.parent = originParent;
             MoreActive(false);
+            transform.parent = originParent;
             body.AddForce(transform.forward * body.mass / 1.5f * throwStrength, ForceMode.Impulse);
             dropthrowTimer = 0f;
             gameObject.layer = LayerMask.NameToLayer("CanInteract");
@@ -137,8 +149,9 @@ public class PickUp : MonoBehaviour, Interactive
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject && transform.parent == PlayerCam.transform)
+        if (!other.gameObject.CompareTag("UI") && transform.parent == PlayerCam.transform)
         {
+            Check = false;
             Unavailable = true;
         }
     }
@@ -147,13 +160,15 @@ public class PickUp : MonoBehaviour, Interactive
     {
         if (other.gameObject && transform.parent == PlayerCam.transform)
         {
+            Check = true;
             Unavailable = false;
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (timer >= 1f)
+        if (timer >= 1f && !collision.gameObject.CompareTag("Player") 
+            && collision.gameObject.name != gameObject.name)
         {
             boxAud.clip = _drop;
             boxAud.Play();

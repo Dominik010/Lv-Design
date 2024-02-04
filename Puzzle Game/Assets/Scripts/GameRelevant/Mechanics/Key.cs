@@ -19,8 +19,14 @@ public class Key : MonoBehaviour, Interactive
 
     public void Interact()
     {
-        getKeys.Play();
         Fader.gotKey = true;
+        StartCoroutine(KeyIsMine());
+    }
+
+    private IEnumerator KeyIsMine()
+    {
+        getKeys.Play();
+        yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
     }
 }

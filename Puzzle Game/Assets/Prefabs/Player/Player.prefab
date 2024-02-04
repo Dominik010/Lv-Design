@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6680040114330742077}
   - component: {fileID: 5065755357234758297}
   - component: {fileID: 6032098319108361047}
+  - component: {fileID: 1164250974995568228}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -133,8 +134,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8, y: 1.2978306, z: 0.8}
-  m_Center: {x: 0, y: -0.3535719, z: 0}
+  m_Size: {x: 0.7, y: 1.222992, z: 0.7}
+  m_Center: {x: 0, y: -0.3909912, z: 0}
 --- !u!114 &6032098319108361047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,13 +151,27 @@ MonoBehaviour:
   moveSpeed: 3
   JumpHeight: {x: 0, y: 4, z: 0}
   GroundDistance: 1
-  GroundDirection: {x: 0, y: -1, z: 0}
-  JumpDetection: {x: 0.5, y: 0.2, z: 0.5}
+  GroundDirection: {x: 0, y: -0.2, z: 0}
+  JumpDetection: {x: 0.35, y: 0.2, z: 0.35}
   BoxCastrot: {x: 0, y: 0, z: 0, w: 1}
   GroundMask:
     serializedVersion: 2
-    m_Bits: 3905
+    m_Bits: 3841
   PlayerCam: {fileID: 747126321324840065}
+--- !u!114 &1164250974995568228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473266818803735912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfb4bd3c341d1ae40a8f6c8c529a4b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Menu: {fileID: 0}
+  Crosshair: {fileID: 0}
 --- !u!1 &747126321324840065
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +240,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 70
   orthographic: 0
   orthographic size: 5
@@ -268,6 +283,7 @@ MonoBehaviour:
   mouseSensitivitY: 100
   xRotation: 0
   Player: {fileID: 2822586618218805316}
+  Crosshair: {fileID: 0}
   intDistance: 2
 --- !u!108 &4124245054936682016
 Light:
@@ -318,9 +334,9 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 375
+    m_Bits: 3959
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0

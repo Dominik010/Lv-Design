@@ -22,7 +22,7 @@ GameObject:
   m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2
   m_IsActive: 1
 --- !u!4 &6011002285550024890
 Transform:
@@ -32,13 +32,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8104207701783328003}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.97408235, z: -0, w: -0.22619377}
+  m_LocalRotation: {x: 0, y: 0.97408265, z: 0, w: 0.22619228}
   m_LocalPosition: {x: 0.62, y: 0.8880005, z: -6.24}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.7, y: 0.70000005, z: 0.6999999}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 153.854, z: 0}
 --- !u!33 &7571239065333448284
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -125,11 +125,14 @@ MonoBehaviour:
   PlayerCam: {fileID: 0}
   Player: {fileID: 0}
   originParent: {fileID: 0}
-  throwStrength: 10
+  throwStrength: 5
   boxAud: {fileID: 0}
   _pickUp: {fileID: 8300000, guid: 264327f438253ff45bf4a7c927388ea6, type: 3}
   _drop: {fileID: 8300000, guid: fddc6ca42ff74374e9338139b03511b7, type: 3}
   _throw: {fileID: 8300000, guid: e5aef97b827d18a409fd0a3dab8b6750, type: 3}
+  oMask:
+    serializedVersion: 2
+    m_Bits: 0
   PlayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -224,7 +227,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -259,7 +262,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -12,9 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector3 JumpHeight = new Vector3(0f, 4f, 0f);
 
     [Range (0.1f,10f)]
-    [SerializeField] float GroundDistance = 1f;
+    [SerializeField] float GroundDistance = -0.2f;
     [SerializeField] Vector3 GroundDirection = new Vector3(0f, -1f, 0f);
-    [SerializeField] Vector3 JumpDetection = new Vector3 (0.3f, 0.2f, 0.3f);
+    [SerializeField] Vector3 JumpDetection = new Vector3 (0.35f, 0.2f, 0.35f);
     [SerializeField] Quaternion BoxCastrot = Quaternion.identity;
     bool CanJump;
     public LayerMask GroundMask;

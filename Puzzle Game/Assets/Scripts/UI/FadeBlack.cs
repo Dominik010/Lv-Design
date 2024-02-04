@@ -11,12 +11,15 @@ public class FadeBlack : MonoBehaviour, Interactive
     private readonly int runTime = Animator.StringToHash("Speed");
     [SerializeField] private Transform newTransform;
     public GameObject Player;
+    public GameObject Level1;
+    public GameObject Level2;
     public bool gotKey;
     private bool portPlayer;
+    private bool isPlaying;
     private PlayerMovement pM;
     private Rigidbody Prb;
     public AudioSource locked;
-    [SerializeField] private TextMeshProUGUI lText;
+    [SerializeField] private GameObject hText;
 
     [SerializeField] private string itemName;
     public string ItemName => itemName;
@@ -45,6 +48,7 @@ public class FadeBlack : MonoBehaviour, Interactive
     {
         if (gotKey) 
         {
+            Level2.SetActive(true);
             portPlayer = true;
             // StartCoroutine(Fading());
             _Animator.SetTrigger(fadeOut);
@@ -55,11 +59,10 @@ public class FadeBlack : MonoBehaviour, Interactive
                 portPlayer = false;
             }));
         }
-        else if (!gotKey)
+        else if (!gotKey && !isPlaying)
         {
-            locked.Play();
-            /*lText.text = "Locked";
-            lText.gameObject.SetActive(true);*/
+            isPlaying = true;
+            StartCoroutine(ShowText());
         }
     }
 
@@ -79,5 +82,17 @@ public class FadeBlack : MonoBehaviour, Interactive
         yield return new WaitUntil(() => _Animator.GetCurrentAnimatorStateInfo(animationlayerIndex).normalizedTime > 0.95f 
         && _Animator.GetCurrentAnimatorStateInfo(animationlayerIndex).IsName(animationNameInAnimator));
         callback?.Invoke();
+        pM.enabled = true;
+        Prb.isKinematic = false;
+        Level1.SetActive(false);
+    }
+
+    private IEnumerator ShowText()
+    {
+        locked.Play();
+        hText.SetActive(true);
+        yield return new WaitForSeconds(0.75f);
+        hText.SetActive(false);
+        isPlaying = false;
     }
 }

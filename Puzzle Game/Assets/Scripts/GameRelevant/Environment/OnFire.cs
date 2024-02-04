@@ -11,6 +11,9 @@ public class OnFire : MonoBehaviour, Interactive
     public AudioSource _switch;
 
     [SerializeField] private string itemName;
+    [SerializeField] private GameObject Counter;
+    [SerializeField] private Counting _counting;
+    private bool count = false;
     public string ItemName => itemName;
     void Start()
     {
@@ -22,6 +25,7 @@ public class OnFire : MonoBehaviour, Interactive
             myParticleSystem.Clear();
             myLight.enabled = false;
         }   _switch = GetComponent<AudioSource>();
+        _counting = Counter.GetComponent<Counting>();
     }
 
     public void Interact()
@@ -37,6 +41,12 @@ public class OnFire : MonoBehaviour, Interactive
             myParticleSystem.Play();
             myLight.enabled = true;
             _switch.Play();
+        }
+
+        if (!count) 
+        {
+            _counting.actCandle++;
+            count = true;
         }
     }
 }
