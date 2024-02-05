@@ -8,6 +8,10 @@ public class OnFire : MonoBehaviour, Interactive
     private Light myLight;
     private ParticleSystem myParticleSystem;
     public bool Off;
+
+    public bool lv3;
+    [SerializeField] private ToTheEnd _end;
+
     public AudioSource _switch;
 
     [SerializeField] private string itemName;
@@ -17,6 +21,10 @@ public class OnFire : MonoBehaviour, Interactive
     public string ItemName => itemName;
     void Start()
     {
+        if (lv3)
+        {
+            _end = Counter.GetComponent<ToTheEnd>();
+        }
         myLight = GetComponentInChildren<Light>(includeInactive: true);
         myParticleSystem = GetComponentInChildren<ParticleSystem>(includeInactive: true);
         if (Off)
@@ -43,9 +51,14 @@ public class OnFire : MonoBehaviour, Interactive
             _switch.Play();
         }
 
-        if (!count) 
+        if (!count && !lv3) 
         {
             _counting.actCandle++;
+            count = true;
+        }
+        else if (!count && lv3) 
+        {
+            _end.LeCount++;
             count = true;
         }
     }

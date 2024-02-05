@@ -7,6 +7,9 @@ TagManager:
   - Environment
   - Throwable
   - MovingPlatform
+  - Stone
+  - UI
+  - Dynamite
   layers:
   - Default
   - TransparentFX

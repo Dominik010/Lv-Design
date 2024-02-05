@@ -105,7 +105,7 @@ public class PickUp : MonoBehaviour, Interactive
     void Throw()        
     {
         if (transform.parent == PlayerCam.transform && Input.GetMouseButtonDown(0)
-            && !isColliding && dropthrowTimer >= 0.5f && !Unavailable && gameObject.tag == "Throwable" | gameObject.tag == "Stone")
+            && !isColliding && dropthrowTimer >= 0.5f && !Unavailable)
         {
             MoreActive(false);
             transform.parent = originParent;
@@ -142,7 +142,7 @@ public class PickUp : MonoBehaviour, Interactive
 
     private void MoreActive(bool enabled)
     {
-        collider.enabled = !enabled;
+        collider.isTrigger = enabled;
         body.useGravity = !enabled;
         body.isKinematic = enabled;
     }
