@@ -65,11 +65,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
         }
-        // To prevent abnormal behaviour on y-axis in anti-gravity area 
-        else if (x == 0f && z == 0f && !rb.useGravity)
-        {
-            rb.velocity = new Vector3(0f, 0f, 0f);
-        }
     }
 
     void Jump()

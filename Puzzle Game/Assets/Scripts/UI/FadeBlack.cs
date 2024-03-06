@@ -38,10 +38,11 @@ public class FadeBlack : MonoBehaviour, Interactive
             pM.enabled = false;
             Prb.isKinematic = true;
         }
-        else if (!portPlayer)
+        if (Player.transform.position == newTransform.position)
         {
             pM.enabled = true;
             Prb.isKinematic = false;
+            Level1.SetActive(false);
         }
     }
     public void Interact()
@@ -82,9 +83,6 @@ public class FadeBlack : MonoBehaviour, Interactive
         yield return new WaitUntil(() => _Animator.GetCurrentAnimatorStateInfo(animationlayerIndex).normalizedTime > 0.95f 
         && _Animator.GetCurrentAnimatorStateInfo(animationlayerIndex).IsName(animationNameInAnimator));
         callback?.Invoke();
-        pM.enabled = true;
-        Prb.isKinematic = false;
-        Level1.SetActive(false);
     }
 
     private IEnumerator ShowText()

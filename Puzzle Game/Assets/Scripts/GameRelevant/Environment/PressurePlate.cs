@@ -7,6 +7,7 @@ public class PressurePlate : MonoBehaviour
     private Animator pAnim;
     private bool TwoWay;
     [SerializeField] private bool pp3;
+    private bool OnCooldown;
     [SerializeField] AudioSource ppSource;
     [SerializeField] private GameObject Child;
     [SerializeField] private AudioSource cSource;
@@ -51,9 +52,14 @@ public class PressurePlate : MonoBehaviour
             || !pp3 && other.gameObject.CompareTag("Throwable") && other.gameObject.layer != LayerMask.NameToLayer("Interaction")
             || !pp3 && other.CompareTag("Stone") && other.gameObject.layer != LayerMask.NameToLayer("Interaction"))
         {
-            pAnim.SetTrigger("Pressed");
-            pAnim.ResetTrigger("NotPressed");
-            return;
+            if (!OnCooldown)
+            {
+                OnCooldown = true;
+                StartCoroutine(Cooldown());
+                pAnim.SetTrigger("Pressed");
+                pAnim.ResetTrigger("NotPressed");
+                return;
+            }
         }
     }
 
@@ -71,5 +77,12 @@ public class PressurePlate : MonoBehaviour
     void Rolling()
     {
         cSource.Play();
+    }
+
+    private IEnumerator Cooldown()
+    {
+        OnCooldown = true;
+        yield return new WaitForSeconds(1);
+        OnCooldown = false;
     }
 }
